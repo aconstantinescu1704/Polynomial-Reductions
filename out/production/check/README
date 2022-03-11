@@ -1,0 +1,95 @@
+TASK1 - RETELE :
+        Problema data este o forma a problemei K-clica mascata, relatiile de prietenie putand fi traduse in
+        muchii si nodurile in prieteni. Astfel, cerinta este identica : exista o k-clica (subgraf complet)/ exista
+        un grup k in care fiecare este prieten cu fiecare.
+
+        Pentru a reduce problema k-clica la SAT avem nevoie de o codificare si de niste restrictii prin care sa formam
+        clauzele problemei SAT.
+
+        Astfel consideram variabilele : Xiv ce capata interpretarea "v este al i-le nod in clica"
+        Pentru a putea transmite variabila Xiv oracolului o codificam ca fiind nr in baza 10 iv.
+        Realizam aceasta codificare in metoda generateIndex
+
+        Restrictiile le stabilim urmarind linkul sugerat si extragem astfel 4 tipuri clauze care asigura
+        ca daca si numai daca avem o clica, SAT va raspunde cu true. Acestea sunt:
+                - macar un nod trebuie sa fie pe pozitia i in clica
+                - pentru orice non-muchie, nodurile nu pot sta in aceeasi clica
+                - un nod nu poate fi considerat pe mai multe pozitii
+                - mai multe noduri nu pot sta pe aceeasi pozitie
+
+        Cu informatiile mentionate, completam fisierul sat.cnf care este mai apoi interpretat de Oracolul ce ne
+        intoarce asignarea variabilelor cu valoarea ce conduce la formarea unei k -clica. In cazul in care formarea
+        unei clici nu este posibila, se intoarce False.
+
+        Descifram acest raspuns stiind ca pozitiv inseamna ca variabila ia valoare True si negativ inseamna False si
+        afisam raspunsul la stdout.
+
+        COMPLEXITATE :  Aflam complexitatea functiei de formulare pe Oracol analizand for-urile imbricate.
+                        Obtinem astfel o complexitate de O(clique * nodes + (nodes) * (nodes-1) / 2 * clique * clique +
+                        nodes * (clique-1) * clique / 2 + clique * (nodes-1) * nodes / 2 = O( nodes^2 * clique^2)
+                        Caz judecat pe un worst case de graf complet.
+TASK 2 - RECLAME :
+        Problema data este o forma a problemei K-cover mascata, interesele comune putand fi traduse in
+        muchii si nodurile in indivizi. Astfel, cerinta este identica : exista o k-acoperire / exista
+        un grup esential. Pentru ca k nu este dat trebuie sa transformam problema de optim intr-o problema
+        de decizie prin verificarea mai multor k-uri, incepand cu o valoare de start f mica si generarea
+        clauzelor pana la obtinerea unui output true din partea oracolului.
+
+        Pentru a reduce problema k-acoperire la SAT avem nevoie de o codificare si de niste restrictii prin
+        care sa formam clauzele problemei SAT.
+
+        Astfel consideram variabilele : Xvi ce capata interpretarea "v este al i-le nod in acoperire"
+        Pentru a putea transmite variabila Xvi oracolului o codificam dupa formula k * (i - 1) + v
+        prin care obtinem numere consecutive de 1 la k * nodes.
+        Realizam aceasta codificare in metoda generateIndex
+
+        Restrictiile le stabilim urmarind exemplu dat si cel anterior rezolvate
+        si extragem astfel 4 tipuri de clauze care asigura ca daca si numai daca avem o k - acoperire,
+        SAT va raspunde cu true. Acestea sunt:
+                - macar un nod trebuie sa fie pe pozitia i in acoperire
+                - pentru ca orice muchie sa aiba cel putin un nod in acoperire
+                - un nod nu poate fi considerat pe mai multe pozitii
+                - mai multe noduri nu pot sta pe aceeasi pozitie
+
+        Cu informatiile mentionate, completam fisierul sat.cnf care este mai apoi interpretat de Oracolul ce ne
+        intoarce asignarea variabilelor cu valoarea ce conduce la formarea unei k - acoperire minima.
+
+        Descifram acest raspuns stiind ca pozitiv inseamna ca variabila ia valoare True si negativ inseamna False si
+        afisam raspunsul la stdout.
+        COMPLEXITATE :  Aflam complexitatea functiei de formulare pe Oracol analizand for-urile imbricate.
+                        Obtinem astfel o complexitate de O(k * nodes + (nodes) * (nodes-1) / 2 * k +
+                        nodes * (k-1) * k / 2 + 2 * k * (nodes-1) * nodes / 2 = O( nodes^2 * k).
+                        Caz judecat pe un worst case de graf complet.
+                        Complexitatea totala este suma din complexitatea algoritmului din metoda formulateOracle
+                        pentru fiecare k de la 2 la k final O(nodes^2 * k^2).
+
+TASK 3 - REGISTRE :
+        Problema data este o forma a problemei K-colorare mascata, relatia de a fi in acelasi registru
+        putand fi traduse in muchii si nodurile in variabile. Astfel, cerinta este identica : exista o k-colorare / exista
+        un alocare k a variabilelor in registri.
+
+        Pentru a reduce problema k-colorare la SAT avem nevoie de o codificare si de niste restrictii prin care sa formam
+        clauzele problemei SAT.
+
+        Astfel consideram variabilele : Xvi ce capata interpretarea "v are culoarea i".
+        Pentru a putea transmite variabila Xvi oracolului o codificam dupa formula k * (i - 1) + v
+        prin care obtinem numere consecutive de 1 la k * nodes.
+        Realizam aceasta codificare in metoda generateIndex
+
+        Impunem restrictii si generam astfel 3 tipuri clauze care asigura ca daca si numai daca avem o colorare,
+        SAT va raspunde cu true. Acestea sunt:
+                - fiecare nod trebuie sa aiba asignata o culoare
+                - pentru orice muchie, nodurile nu pot avea aceeasi culoare
+                - un nod nu poate fi considerat cu mai multe culori
+
+
+        Cu informatiile mentionate, completam fisierul sat.cnf care este mai apoi interpretat de Oracolul ce ne
+        intoarce asignarea variabilelor cu valoarea ce conduce la formarea unei k -colorare. In cazul in care formarea
+        unei colorari nu este posibila, se intoarce False.
+
+        Descifram acest raspuns stiind ca pozitiv inseamna ca variabila ia valoare True si negativ inseamna False si
+        afisam raspunsul la stdout.
+
+        COMPLEXITATE :  Aflam complexitatea functiei de formulare pe Oracol analizand for-urile imbricate.
+                        Obtinem astfel o complexitate de O(k * nodes + (nodes) * (nodes-1) / 2 * k +
+                        nodes * (k-1) * k / 2 = O(nodes^2 * k). Caz judecat pe un worst case de graf complet
